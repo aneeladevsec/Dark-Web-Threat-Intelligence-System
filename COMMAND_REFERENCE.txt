@@ -1,0 +1,343 @@
+DARK WEB THREAT INTELLIGENCE API - COMMAND REFERENCE
+═════════════════════════════════════════════════════════════════════════════════
+
+📋 COMMAND QUICK REFERENCE
+
+═════════════════════════════════════════════════════════════════════════════════
+STARTING THE PROJECT
+═════════════════════════════════════════════════════════════════════════════════
+
+Option 1 - Windows Batch File (Easiest):
+  cd c:\Users\PMLS\Downloads\darkweb-intel
+  start.bat
+
+Option 2 - Direct Python:
+  cd c:\Users\PMLS\Downloads\darkweb-intel
+  python backend/app.py
+
+Option 3 - PowerShell:
+  cd c:\Users\PMLS\Downloads\darkweb-intel\backend
+  python app.py
+
+Expected Output:
+  🌑 Generating threat intelligence data...
+  ✅ Generated 200 threat records
+  🌑 Dark Web Intelligence API on port 5002
+  Running on http://127.0.0.1:5002
+
+═════════════════════════════════════════════════════════════════════════════════
+ACCESSING THE FRONTEND
+═════════════════════════════════════════════════════════════════════════════════
+
+In Browser Address Bar (after starting server):
+  file:///c:/Users/PMLS/Downloads/darkweb-intel/frontend/index.html
+
+Or if served via HTTP:
+  http://localhost:5002/frontend/index.html
+
+═════════════════════════════════════════════════════════════════════════════════
+API TESTING - CURL COMMANDS
+═════════════════════════════════════════════════════════════════════════════════
+
+Basic Tests:
+  
+  Get Server Health:
+    curl http://localhost:5002/health
+  
+  Get Statistics:
+    curl http://localhost:5002/stats
+  
+  Get All Threats:
+    curl http://localhost:5002/threats
+  
+  Get Recent Threats:
+    curl http://localhost:5002/threats/recent
+  
+  Get Critical Threats:
+    curl http://localhost:5002/threats/critical
+
+Search & Query:
+  
+  Search for Ransomware:
+    curl "http://localhost:5002/search?q=ransomware"
+  
+  Get Threat by ID:
+    curl "http://localhost:5002/threats/THREAT-1F579AEC"
+
+Analytics:
+  
+  Get Timeline Data:
+    curl "http://localhost:5002/analytics/timeline?days=7"
+  
+  Get Predictive Insights:
+    curl "http://localhost:5002/analytics/predictive"
+  
+  Get Advanced Metrics:
+    curl "http://localhost:5002/analytics/advanced"
+  
+  Get Metrics by Type:
+    curl "http://localhost:5002/threats/metrics/by-type"
+  
+  Get Metrics by Source:
+    curl "http://localhost:5002/threats/metrics/by-source"
+
+Export:
+  
+  Export as CSV:
+    curl "http://localhost:5002/export/threats/csv" > threats.csv
+  
+  Export as JSON:
+    curl "http://localhost:5002/export/threats/json" > threats.json
+
+System:
+  
+  Get Alerts:
+    curl "http://localhost:5002/alerts?limit=10"
+  
+  Get Geolocation:
+    curl "http://localhost:5002/geo"
+  
+  Get Feed:
+    curl "http://localhost:5002/feed"
+
+═════════════════════════════════════════════════════════════════════════════════
+API TESTING - POWERSHELL COMMANDS
+═════════════════════════════════════════════════════════════════════════════════
+
+Basic Tests:
+  
+  Health Check:
+    (Invoke-WebRequest -Uri "http://localhost:5002/health" -UseBasicParsing).Content | ConvertFrom-Json
+  
+  Get Statistics:
+    (Invoke-WebRequest -Uri "http://localhost:5002/stats" -UseBasicParsing).Content | ConvertFrom-Json | Select-Object -Property total_threats, critical_count
+  
+  Get Threats Count:
+    $threats = (Invoke-WebRequest -Uri "http://localhost:5002/threats" -UseBasicParsing).Content | ConvertFrom-Json; $threats.total
+
+Analytics:
+  
+  Predictive Insights:
+    (Invoke-WebRequest -Uri "http://localhost:5002/analytics/predictive" -UseBasicParsing).Content | ConvertFrom-Json | Format-List
+
+Data Export:
+  
+  Download CSV:
+    Invoke-WebRequest -Uri "http://localhost:5002/export/threats/csv" -OutFile "threats.csv"
+  
+  Download JSON:
+    Invoke-WebRequest -Uri "http://localhost:5002/export/threats/json" -OutFile "threats.json"
+
+═════════════════════════════════════════════════════════════════════════════════
+INSTALLATION & SETUP
+═════════════════════════════════════════════════════════════════════════════════
+
+Step 1 - Navigate to Project:
+  cd c:\Users\PMLS\Downloads\darkweb-intel
+
+Step 2 - Install Dependencies (First Time Only):
+  pip install -r backend/requirements.txt
+
+Step 3 - Start Server:
+  python backend/app.py
+
+Step 4 - Open Frontend:
+  file:///c:/Users/PMLS/Downloads/darkweb-intel/frontend/index.html
+
+Note: Dependencies are auto-installed by start.bat script
+
+═════════════════════════════════════════════════════════════════════════════════
+CONFIGURATION MANAGEMENT
+═════════════════════════════════════════════════════════════════════════════════
+
+View Current Settings:
+  Use your favorite text editor to open: .env
+
+Common Configuration Changes:
+
+  Change API Port:
+    Edit .env: PORT=5002  →  PORT=8000
+    Then restart server
+  
+  Change API Authentication Key:
+    Edit .env: API_KEY=threat-intel-api-key-test  →  API_KEY=my-custom-key
+  
+  Change Database Location:
+    Edit .env: DB_PATH=threats.db  →  DB_PATH=/path/to/db/threats.db
+  
+  Change Cache TTL:
+    Edit .env: CACHE_TTL=300  →  CACHE_TTL=600
+
+Note: Restart server after any .env changes
+
+═════════════════════════════════════════════════════════════════════════════════
+TESTING & VERIFICATION
+═════════════════════════════════════════════════════════════════════════════════
+
+Run Automated Tests:
+  python test_api.py
+
+Manual Endpoint Testing:
+  Use start.bat to run server
+  Open START_HERE.txt for quick reference
+  Use curl or PowerShell commands above
+
+Verify Installation:
+  1. Run: python backend/app.py
+  2. Expected: API starts successfully
+  3. Run: curl http://localhost:5002/health
+  4. Check: {status: "healthy", threats_loaded: 200}
+
+═════════════════════════════════════════════════════════════════════════════════
+COMMON DEVELOPMENT TASKS
+═════════════════════════════════════════════════════════════════════════════════
+
+Add New Endpoint:
+  1. Edit: backend/app.py
+  2. Add @app.route('/new-endpoint')
+  3. Create function
+  4. Test with curl
+  5. Document in README.md
+
+Modify Frontend Tab:
+  1. Edit: frontend/index.html
+  2. Find tab section
+  3. Update HTML or JavaScript
+  4. Refresh browser page
+  5. Test all functionality
+
+Add New Feature:
+  1. Identify what backend support needed
+  2. Add to app.py
+  3. Test API endpoint
+  4. Add frontend UI element
+  5. Connect API call
+  6. Test end-to-end
+  7. Update documentation
+
+Debug Issues:
+  Backend: Check Python console output
+  Frontend: Open browser console (F12)
+  Database: Check if threats.db exists
+  API: Use curl to test endpoints
+
+═════════════════════════════════════════════════════════════════════════════════
+DEPLOYMENT COMMANDS
+═════════════════════════════════════════════════════════════════════════════════
+
+Local Development (Already Configured):
+  cd c:\Users\PMLS\Downloads\darkweb-intel
+  python backend/app.py
+
+Production with Gunicorn:
+  cd c:\Users\PMLS\Downloads\darkweb-intel
+  gunicorn --workers 4 --bind 0.0.0.0:5002 backend.app:app
+
+Production with Multiple Workers:
+  gunicorn --workers 8 --worker-class sync --bind 0.0.0.0:5002 backend.app:app
+
+Production with Auto-Restart:
+  gunicorn --workers 4 --reload --bind 0.0.0.0:5002 backend.app:app
+
+Docker Build:
+  docker build -t darkweb-intel .
+  docker run -p 5002:5002 darkweb-intel
+
+Cloud Deployment (Render):
+  Push to GitHub repository
+  Connect Render to repository
+  Auto-deploys on push
+
+═════════════════════════════════════════════════════════════════════════════════
+TROUBLESHOOTING COMMANDS
+═════════════════════════════════════════════════════════════════════════════════
+
+Check Python Installation:
+  python --version
+
+Check Installed Packages:
+  pip list | findstr flask
+
+Verify Port is Free:
+  netstat -an | findstr 5002
+
+Test Network Connection:
+  ping localhost
+  curl http://localhost:5002
+
+Reset Database:
+  del threats.db
+  (Run server - auto-creates new database)
+
+Clear Python Cache:
+  del backend/__pycache__
+
+Reinstall Dependencies:
+  pip install -r backend/requirements.txt --force-reinstall
+
+═════════════════════════════════════════════════════════════════════════════════
+USEFUL FILE LOCATIONS
+═════════════════════════════════════════════════════════════════════════════════
+
+Project Root:
+  c:\Users\PMLS\Downloads\darkweb-intel\
+
+Backend Code:
+  c:\Users\PMLS\Downloads\darkweb-intel\backend\app.py
+
+Frontend:
+  c:\Users\PMLS\Downloads\darkweb-intel\frontend\index.html
+
+Configuration:
+  c:\Users\PMLS\Downloads\darkweb-intel\.env
+
+Database:
+  c:\Users\PMLS\Downloads\darkweb-intel\threats.db
+
+Documentation:
+  c:\Users\PMLS\Downloads\darkweb-intel\README.md
+  c:\Users\PMLS\Downloads\darkweb-intel\QUICK_REFERENCE.md
+
+Scripts:
+  c:\Users\PMLS\Downloads\darkweb-intel\start.bat
+  c:\Users\PMLS\Downloads\darkweb-intel\test_api.py
+
+═════════════════════════════════════════════════════════════════════════════════
+QUICK COMMAND REFERENCE
+═════════════════════════════════════════════════════════════════════════════════
+
+Command                               Action
+─────────────────────────────────────────────────────────────────────────────────
+cd darkweb-intel                      Navigate to project
+start.bat                             Start server (Windows)
+python backend/app.py                 Start server (direct)
+pip install -r requirements.txt       Install dependencies
+curl http://localhost:5002/stats      Test API
+python test_api.py                    Run test suite
+edit .env                             Change configuration
+del threats.db                        Reset database
+python backend/app.py --help          Show help (if added)
+
+═════════════════════════════════════════════════════════════════════════════════
+DEFAULT VALUES
+═════════════════════════════════════════════════════════════════════════════════
+
+Port:                    5002
+API Key:                 threat-intel-api-key-test
+Database:                threats.db
+Cache TTL:               300 seconds
+Initial Threats:         200 records
+Flask Debug:             Off (production)
+Auto-Refresh Frontend:   30 seconds
+
+═════════════════════════════════════════════════════════════════════════════════
+
+Need Help?
+  1. Check START_HERE.txt: Overview and quick start
+  2. Read README.md: Complete documentation
+  3. Review QUICK_REFERENCE.md: Common tasks
+  4. Check COMPLETION_CHECKLIST.md: Verification
+
+═════════════════════════════════════════════════════════════════════════════════
+Version: 1.0.0 | Date: April 2, 2026 | Status: ✅ PRODUCTION READY
+═════════════════════════════════════════════════════════════════════════════════
